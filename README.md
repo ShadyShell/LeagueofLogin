@@ -14,3 +14,7 @@ Under the Account Configuration you can add, edit or delete new account. This is
 The Default Account section is where you can set what is shown in the dropdown by default when the program is launched. This does not have to be set and can be left blank.
 
 If you do not wish to use the GUI that I setup with my blood and tears you can always edit the ini manually but you will need to relaunch the program if you want any changes to be reflected. Enjoy automatic login!
+
+
+Credits:
+League logo created by DKman (http://dkman.deviantart.com/art/League-Of-Legends-137904820)
