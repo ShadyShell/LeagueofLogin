@@ -17,4 +17,4 @@ If you do not wish to use the GUI that I setup with my blood and tears you can a
 
 
 Credits:
-League logo created by DKman (http://dkman.deviantart.com/art/League-Of-Legends-137904820)
+Special thanks to DKman for the awesome League logo (http://dkman.deviantart.com/art/League-Of-Legends-137904820)
