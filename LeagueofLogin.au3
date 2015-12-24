@@ -1,7 +1,7 @@
 #RequireAdmin
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
-#AutoIt3Wrapper_Icon=..\MLP Icons\mlp_icon___league_of_legends_by_gefey-d4y3ijd.ico
-;#AutoIt3Wrapper_Icon=League_Of_Legends_by_DKman.ico
+;#AutoIt3Wrapper_Icon=..\MLP Icons\mlp_icon___league_of_legends_by_gefey-d4y3ijd.ico
+#AutoIt3Wrapper_Icon=League_Of_Legends_by_DKman.ico
 #AutoIt3Wrapper_Outfile=LeagueofLogin.exe
 #AutoIt3Wrapper_Res_Fileversion=1.0
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
@@ -101,8 +101,8 @@ $btnNewCancel = GUICtrlCreateButton("Cancel", 200, 64, 81, 25)
 #EndRegion ### END Koda GUI section ###
 #Region ### START Koda GUI section ### Form=c:\users\dschneider\dropbox\other stuff\autoit projects\frmaccounts.kxf
 $frmLogin = GUICreate("League of Login", 281, 40, -1, -1, BitXOR($GUI_SS_DEFAULT_GUI, $WS_MINIMIZEBOX))
-GUISetIcon("C:\Users\ShadyShell\Dropbox\Other Stuff\MLP Icons\mlp_icon___league_of_legends_by_gefey-d4y3ijd.ico", -1)
-;GUISetIcon("C:\Users\ShadyShell\Dropbox\Other Stuff\AutoIt Projects\League_Of_Legends_by_DKman.ico", -1)
+;GUISetIcon("C:\Users\ShadyShell\Dropbox\Other Stuff\MLP Icons\mlp_icon___league_of_legends_by_gefey-d4y3ijd.ico", -1)
+GUISetIcon("C:\Users\ShadyShell\Dropbox\Other Stuff\AutoIt Projects\League_Of_Legends_by_DKman.ico", -1)
 $cmList = GUICtrlCreateCombo("", 8, 8, 185, 25, BitOR($CBS_DROPDOWNLIST,$CBS_AUTOHSCROLL))
 $btnLogin = GUICtrlCreateButton("Login", 200, 8, 73, 22)
 #EndRegion ### END Koda GUI section ###
@@ -362,18 +362,22 @@ Func _Start($username, $password)
 	;Search for EULA
 	While WinExists("LoL Patcher", "") == 1
 		$WinLoc = WinGetPos("LoL Patcher")
-		$location = PixelSearch(($WinLoc[0]+($WinLoc[2])/2)-200, $WinLoc[1]+600, ($WinLoc[0]+($WinLoc[2])/2), ($WinLoc[3]+$WinLoc[1]-160), 0x836C45, 0, 1)
+		If $WinLoc <> 0 Then
+			$location = PixelSearch(($WinLoc[0]+($WinLoc[2])/2)-200, $WinLoc[1]+600, ($WinLoc[0]+($WinLoc[2])/2), ($WinLoc[3]+$WinLoc[1]-160), 0x836C45, 0, 1)
+		EndIf
 		If Not @error Then
 			While WinExists("LoL Patcher", "") == 1
 				$WinLoc = WinGetPos("LoL Patcher")
-				$location = PixelSearch(($WinLoc[0]+($WinLoc[2])/2)-200, $WinLoc[1]+600, ($WinLoc[0]+($WinLoc[2])/2), ($WinLoc[3]+$WinLoc[1]-160), 0x836C45, 0, 1)
+				If $WinLoc <> 0 Then
+					$location = PixelSearch(($WinLoc[0]+($WinLoc[2])/2)-200, $WinLoc[1]+600, ($WinLoc[0]+($WinLoc[2])/2), ($WinLoc[3]+$WinLoc[1]-160), 0x836C45, 0, 1)
+				EndIf
 				If Not @error Then
 					MouseClick("left", $location[0], $location[1])
 				EndIf
 			WEnd
 		EndIf
 	WEnd
-Exit
+
 	;Detect login screen and login
 	WinWait("PVP.net Client", "")
 	If Not WinActive("PVP.net Client", "") Then WinActivate("PVP.net Client", "")
@@ -399,7 +403,7 @@ Exit
 	WEnd
 	Sleep(500)
 	Send("{ENTER}")
-	_FoolProofStart(@ScriptDir & "\autoAccept.exe")
+	;_FoolProofStart(@ScriptDir & "\autoAccept.exe")
 	Exit
 EndFunc
 
