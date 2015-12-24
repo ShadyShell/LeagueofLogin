@@ -354,7 +354,16 @@ Func _Start($username, $password)
 	;Search for launch button
 	While 1
 		$WinLoc = WinGetPos("LoL Patcher")
-		$location = PixelSearch($WinLoc[0], $WinLoc[1], ($WinLoc[0]+$WinLoc[2]), ($WinLoc[3]+$WinLoc[1]), 0x92440B, 2, 1)
+		If $WinLoc <> 0 Then
+			$location = PixelSearch($WinLoc[0], $WinLoc[1], ($WinLoc[0]+$WinLoc[2]), ($WinLoc[3]+$WinLoc[1]), 0x92440B, 2, 1)
+		Else
+			$ans = MsgBox(4, "Launcher not found", "The launcher was not found, would you like to relaunch it?")
+			If $ans = 6 Then
+				_Start($username, $password)
+			Else
+				Exit
+			EndIf
+		EndIf
 		If Not @error Then ExitLoop
 	WEnd
 	MouseClick("left", $location[0], $location[1])
@@ -385,7 +394,16 @@ Func _Start($username, $password)
 	$WinLoc = WinGetPos("PVP.net Client")
 	While 1
 		$WinLoc = WinGetPos("PVP.net Client")
-		$location = PixelSearch($WinLoc[0]+$WinLoc[2]/4, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/2)+5, ($WinLoc[0]+$WinLoc[2]/4)+50, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/2)+45, 0x898989, 0, 1)
+		If $WinLoc <> 0 Then
+			$location = PixelSearch($WinLoc[0]+$WinLoc[2]/4, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/2)+5, ($WinLoc[0]+$WinLoc[2]/4)+50, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/2)+45, 0x898989, 0, 1)
+		Else
+			$ans = MsgBox(4, "Login screen not found", "The login screen was not found, would you like to relaunch the launcher?")
+			If $ans = 6 Then
+				_Start($username, $password)
+			Else
+				Exit
+			EndIf
+		EndIf
 		If Not @error Then ExitLoop
 	WEnd
 	;Check for remember username
