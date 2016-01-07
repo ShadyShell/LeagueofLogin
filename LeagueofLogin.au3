@@ -1,3 +1,6 @@
+;Copyright ShadyShell 2015
+;Special thanks to DKman for the awesome League logo
+
 #RequireAdmin
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
 ;#AutoIt3Wrapper_Icon=..\MLP Icons\mlp_icon___league_of_legends_by_gefey-d4y3ijd.ico
@@ -5,7 +8,6 @@
 #AutoIt3Wrapper_Outfile=LeagueofLogin.exe
 #AutoIt3Wrapper_Res_Fileversion=1.0
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
-;Copyright ShadyShell 2015
 #include <GuiComboBox.au3>
 #include <GuiButton.au3>
 #include <File.au3>
@@ -410,7 +412,7 @@ Func _Start($username, $password)
 	Sleep(500)
 	While 1
 		$WinLoc = WinGetPos("PVP.net Client")
-		$location = PixelSearch(($WinLoc[0]+$WinLoc[2]/5)-145, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/2)+5, ($WinLoc[0]+$WinLoc[2]/5)-130, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/2)+30, 0x616169, 0, 1)
+		$location = PixelSearch(($WinLoc[0]+$WinLoc[2]/5)-145, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/2)+5, ($WinLoc[0]+$WinLoc[2]/5)-130, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/2)+30, 0x0F0F10, 0, 1)
 		If Not @error Then ;checked
 			Send("{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}" & $username & "{TAB}" & $password)
 			ExitLoop
