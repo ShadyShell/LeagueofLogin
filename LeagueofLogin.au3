@@ -412,7 +412,7 @@ Func _Start($username, $password)
 	Sleep(500)
 	While 1
 		$WinLoc = WinGetPos("PVP.net Client")
-		$location = PixelSearch(($WinLoc[0]+$WinLoc[2]/5)-145, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/2)+5, ($WinLoc[0]+$WinLoc[2]/5)-130, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/2)+30, 0x0F0F10, 0, 1)
+		$location = PixelSearch(($WinLoc[0]+$WinLoc[2]/5)-145, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/2)+5, ($WinLoc[0]+$WinLoc[2]/5)-130, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/2)+30, 0x0F0F10, 1, 1)
 		If Not @error Then ;checked
 			Send("{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}" & $username & "{TAB}" & $password)
 			ExitLoop
