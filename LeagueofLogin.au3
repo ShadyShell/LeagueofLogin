@@ -357,7 +357,7 @@ Func _Start($username, $password)
 	While 1
 		$WinLoc = WinGetPos("LoL Patcher")
 		If $WinLoc <> 0 Then
-			$location = PixelSearch($WinLoc[0], $WinLoc[1], ($WinLoc[0]+$WinLoc[2]), ($WinLoc[1]+70), 0x92440B, 10, 1)
+			$location = PixelSearch(($WinLoc[0]+$WinLoc[2])/1.5, $WinLoc[1], ($WinLoc[0]+$WinLoc[2])/2, ($WinLoc[1]+70), 0x92440B, 10, 1)
 		Else
 			$ans = MsgBox(4, "Launcher not found", "The launcher was not found, would you like to relaunch it?")
 			If $ans = 6 Then
