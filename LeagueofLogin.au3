@@ -40,12 +40,16 @@ dim $path
 $update = InetRead("https://raw.githubusercontent.com/ShadyShell/LeagueofLogin/master/Changelog")
 $update = BinaryToString($update)
 $changeLog = StringSplit($update,@CRLF)
-If $changeLog[4] > FileGetVersion(@AutoItExe) Then
-	$ans = MsgBox(4, "New version available!", "An update is available, do you wish to download it now?")
-	If $ans = "6" Then
-		Run("https://github.com/ShadyShell/LeagueofLogin")
-		Exit
+If $changeLog[0] <> 1 Then
+	If $changeLog[4] > FileGetVersion(@AutoItExe) Then
+		$ans = MsgBox(4, "New version available!", "An update is available, do you wish to download it now?")
+		If $ans = "6" Then
+			Run("https://github.com/ShadyShell/LeagueofLogin")
+			Exit
+		EndIf
 	EndIf
+Else
+	MsgBox(16,"Error","Error checking for updates")
 EndIf
 
 ; Create a GUI
