@@ -6,7 +6,7 @@
 ;#AutoIt3Wrapper_Icon=..\MLP Icons\mlp_icon___league_of_legends_by_gefey-d4y3ijd.ico
 #AutoIt3Wrapper_Icon=League_Of_Legends_by_DKman.ico
 #AutoIt3Wrapper_Outfile=LeagueofLogin.exe
-#AutoIt3Wrapper_Res_Fileversion=1.0
+#AutoIt3Wrapper_Res_Fileversion=1.1
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 #include <GuiComboBox.au3>
 #include <GuiButton.au3>
@@ -417,6 +417,7 @@ Func _Start($username, $password)
 	While 1
 		$WinLoc = WinGetPos("PVP.net Client")
 		$location = PixelSearch(($WinLoc[0]+$WinLoc[2]/5)-145, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/2)+5, ($WinLoc[0]+$WinLoc[2]/5)-130, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/2)+30, 0x0F0F10, 1, 1)
+		$password = StringReplace(StringReplace(StringReplace(StringReplace(StringReplace(StringReplace(StringReplace(StringReplace($password, "{", "☺{☹"), "}", "☺}☹"), "☺", "{"), "☹", "}"), "!", "{!}"), "#", "{#}"), "+", "{+}"), "^", "{^}")
 		If Not @error Then ;checked
 			Send("{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}" & $username & "{TAB}" & $password)
 			ExitLoop
