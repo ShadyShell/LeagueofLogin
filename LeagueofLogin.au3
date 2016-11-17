@@ -8,9 +8,10 @@
 #AutoIt3Wrapper_Outfile=LeagueofLogin.exe
 #AutoIt3Wrapper_Res_Comment=Created by ShadyShell
 #AutoIt3Wrapper_Res_Description=A League of Legends login script
-#AutoIt3Wrapper_Res_Fileversion=1.5.0.0
+#AutoIt3Wrapper_Res_Fileversion=1.5.1.0
 #AutoIt3Wrapper_Res_Language=1033
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
+
 #include <GuiComboBox.au3>
 #include <GuiButton.au3>
 #include <File.au3>
@@ -376,6 +377,25 @@ Func _NewStart($username, $password)
 		If Not @error Then ExitLoop
 	WEnd
 	MouseClick("left", $location[0], $location[1])
+
+	;Search for EULA
+	While WinExists("LoL Patcher", "") == 1
+		$WinLoc = WinGetPos("LoL Patcher")
+		If $WinLoc <> 0 Then
+			$location = PixelSearch(($WinLoc[0]+($WinLoc[2])/2)-200, $WinLoc[1]+600, ($WinLoc[0]+($WinLoc[2])/2), ($WinLoc[3]+$WinLoc[1]-160), 0x836C45, 0, 1)
+		EndIf
+		If Not @error Then
+			While WinExists("LoL Patcher", "") == 1
+				$WinLoc = WinGetPos("LoL Patcher")
+				If $WinLoc <> 0 Then
+					$location = PixelSearch(($WinLoc[0]+($WinLoc[2])/2)-200, $WinLoc[1]+600, ($WinLoc[0]+($WinLoc[2])/2), ($WinLoc[3]+$WinLoc[1]-160), 0x836C45, 0, 1)
+				EndIf
+				If Not @error Then
+					MouseClick("left", $location[0], $location[1])
+				EndIf
+			WEnd
+		EndIf
+	WEnd
 
 	;Detect login screen and login
 	;MsgBox(0,"","test")

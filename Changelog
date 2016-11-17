@@ -1,6 +1,9 @@
 Change Log
 ==========
 
+1.5.1
+- Added forgotten EULA accept
+
 1.5
 - Updated script to work with the new public beta!
   - The code for the old script is still there just commented out
