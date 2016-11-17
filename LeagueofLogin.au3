@@ -1,12 +1,15 @@
-;Copyright ShadyShell 2015
+;Copyright ShadyShell 2016
 ;Special thanks to DKman for the awesome League logo
 
 #RequireAdmin
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
-;#AutoIt3Wrapper_Icon=..\MLP Icons\mlp_icon___league_of_legends_by_gefey-d4y3ijd.ico
+;#AutoIt3Wrapper_Icon=..\..\MLP Icons\mlp_icon___league_of_legends_by_gefey-d4y3ijd.ico
 #AutoIt3Wrapper_Icon=League_Of_Legends_by_DKman.ico
 #AutoIt3Wrapper_Outfile=LeagueofLogin.exe
-#AutoIt3Wrapper_Res_Fileversion=1.1
+#AutoIt3Wrapper_Res_Comment=Created by ShadyShell
+#AutoIt3Wrapper_Res_Description=A League of Legends login script
+#AutoIt3Wrapper_Res_Fileversion=1.5.0.0
+#AutoIt3Wrapper_Res_Language=1033
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 #include <GuiComboBox.au3>
 #include <GuiButton.au3>
@@ -158,9 +161,9 @@ While 1
 			Else
 				If $encryption = "yes" Then
 					$password = StringEncrypt(False, $password, $key)
-					_Start($username, $password)
+					_NewStart($username, $password)
 				Else
-					_Start($username, $password)
+					_NewStart($username, $password)
 				EndIf
 			EndIf
 		Case $btnCancel
@@ -340,6 +343,77 @@ While 1
 	EndSwitch
 WEnd
 
+Func _NewStart($username, $password)
+	GUISetState(@SW_HIDE)
+	If $path = "" Then
+		_FoolProofStart("C:\Riot Games\League of Legends\lol.launcher.exe")
+	Else
+		_FoolProofStart($path & "\lol.launcher.exe")
+	EndIf
+
+	;Relaunch launger on error message
+	While WinExists("LoL Patcher", "") == 1
+		$window = WinWait("Error")
+		ControlClick($window, "OK", "Button1")
+	WEnd
+
+	WinWait("LoL Patcher","")
+	WinActivate("LoL Patcher","")
+
+	;Search for launch button
+	While 1
+		$WinLoc = WinGetPos("LoL Patcher")
+		If $WinLoc <> 0 Then
+			$location = PixelSearch(($WinLoc[0]+$WinLoc[2])/1.5, $WinLoc[1], ($WinLoc[0]+$WinLoc[2])/2, ($WinLoc[1]+70), 0x92440B, 10, 1)
+		Else
+			$ans = MsgBox(4, "Launcher not found", "The launcher was not found, would you like to relaunch it?")
+			If $ans = 6 Then
+				_NewStart($username, $password)
+			Else
+				Exit
+			EndIf
+		EndIf
+		If Not @error Then ExitLoop
+	WEnd
+	MouseClick("left", $location[0], $location[1])
+
+	;Detect login screen and login
+	;MsgBox(0,"","test")
+	WinWait("League Client")
+	$list=WinList("League Client")
+	$WinLoc=WinGetPos($list[3][1])
+	While $WinLoc[3] < 101
+		$list=WinList("League Client")
+		$WinLoc=WinGetPos($list[3][1])
+		;_ArrayDisplay($list)
+	WEnd
+
+	;Check when to activate League window
+	$location = PixelSearch(($WinLoc[0]+$WinLoc[2])-200, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.6)+20, ($WinLoc[0]+$WinLoc[2])-200, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.6)+20, 0x000000, 1, 1)
+	While @error
+		$location = PixelSearch(($WinLoc[0]+$WinLoc[2])-200, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.6)+20, ($WinLoc[0]+$WinLoc[2])-200, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.6)+20, 0x000000, 1, 1)
+	WEnd
+	WinActivate($list[3][1])
+
+	;Check To see if login is possible
+	Sleep(500)
+	While 1
+		$WinLoc = WinGetPos($list[3][1])
+		$location = PixelSearch(($WinLoc[0]+$WinLoc[2]/16)-3, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/12)+8, ($WinLoc[0]+$WinLoc[2]/16)-3, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/12)+8, 0xEE2E24, 1, 1)
+		$password = StringReplace(StringReplace(StringReplace(StringReplace(StringReplace(StringReplace(StringReplace(StringReplace($password, "{", "☺{☹"), "}", "☺}☹"), "☺", "{"), "☹", "}"), "!", "{!}"), "#", "{#}"), "+", "{+}"), "^", "{^}")
+		If Not @error Then ;exists
+			Sleep(3000)
+			Send("{TAB}" & $username & "{TAB}" & $password)
+			ExitLoop
+		EndIf
+	WEnd
+	Sleep(500)
+	Send("{ENTER}")
+	;_FoolProofStart(@ScriptDir & "\autoAccept.exe")
+	Exit
+EndFunc
+
+#comments-start
 Func _Start($username, $password)
 	GUISetState(@SW_HIDE)
 	If $path = "" Then
@@ -431,6 +505,7 @@ Func _Start($username, $password)
 	;_FoolProofStart(@ScriptDir & "\autoAccept.exe")
 	Exit
 EndFunc
+#comments-end
 
 Func _FoolProofStart($What)
    If @OSTYPE = "WIN32_NT" Then
