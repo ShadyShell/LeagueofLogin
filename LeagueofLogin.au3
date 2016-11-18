@@ -8,7 +8,7 @@
 #AutoIt3Wrapper_Outfile=LeagueofLogin.exe
 #AutoIt3Wrapper_Res_Comment=Created by ShadyShell
 #AutoIt3Wrapper_Res_Description=A League of Legends login script
-#AutoIt3Wrapper_Res_Fileversion=1.5.1.0
+#AutoIt3Wrapper_Res_Fileversion=1.5.2.0
 #AutoIt3Wrapper_Res_Language=1033
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 
@@ -48,7 +48,7 @@ If $changeLog[0] <> 1 Then
 	If $changeLog[4] > FileGetVersion(@AutoItExe) Then
 		$ans = MsgBox(4, "New version available!", "An update is available, do you wish to download it now?")
 		If $ans = "6" Then
-			Run("https://github.com/ShadyShell/LeagueofLogin")
+			ShellExecute("https://github.com/ShadyShell/LeagueofLogin")
 			Exit
 		EndIf
 	EndIf
@@ -398,14 +398,12 @@ Func _NewStart($username, $password)
 	WEnd
 
 	;Detect login screen and login
-	;MsgBox(0,"","test")
 	WinWait("League Client")
 	$list=WinList("League Client")
 	$WinLoc=WinGetPos($list[3][1])
 	While $WinLoc[3] < 101
 		$list=WinList("League Client")
 		$WinLoc=WinGetPos($list[3][1])
-		;_ArrayDisplay($list)
 	WEnd
 
 	;Check when to activate League window
