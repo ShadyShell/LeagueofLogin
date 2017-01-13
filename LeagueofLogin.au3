@@ -8,7 +8,7 @@
 #AutoIt3Wrapper_Outfile=LeagueofLogin.exe
 #AutoIt3Wrapper_Res_Comment=Created by ShadyShell
 #AutoIt3Wrapper_Res_Description=A League of Legends login script
-#AutoIt3Wrapper_Res_Fileversion=1.5.2.0
+#AutoIt3Wrapper_Res_Fileversion=1.5.3.0
 #AutoIt3Wrapper_Res_Language=1033
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 
@@ -400,10 +400,10 @@ Func _NewStart($username, $password)
 	;Detect login screen and login
 	WinWait("League Client")
 	$list=WinList("League Client")
-	$WinLoc=WinGetPos($list[3][1])
+	$WinLoc=WinGetPos($list[1][1])
 	While $WinLoc[3] < 101
 		$list=WinList("League Client")
-		$WinLoc=WinGetPos($list[3][1])
+		$WinLoc=WinGetPos($list[1][1])
 	WEnd
 
 	;Check when to activate League window
@@ -411,18 +411,25 @@ Func _NewStart($username, $password)
 	While @error
 		$location = PixelSearch(($WinLoc[0]+$WinLoc[2])-200, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.6)+20, ($WinLoc[0]+$WinLoc[2])-200, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.6)+20, 0x000000, 1, 1)
 	WEnd
-	WinActivate($list[3][1])
+	WinActivate($list[1][1])
 
 	;Check To see if login is possible
 	Sleep(500)
 	While 1
-		$WinLoc = WinGetPos($list[3][1])
+		$WinLoc = WinGetPos($list[1][1])
 		$location = PixelSearch(($WinLoc[0]+$WinLoc[2]/16)-3, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/12)+8, ($WinLoc[0]+$WinLoc[2]/16)-3, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/12)+8, 0xEE2E24, 1, 1)
 		$password = StringReplace(StringReplace(StringReplace(StringReplace(StringReplace(StringReplace(StringReplace(StringReplace($password, "{", "☺{☹"), "}", "☺}☹"), "☺", "{"), "☹", "}"), "!", "{!}"), "#", "{#}"), "+", "{+}"), "^", "{^}")
 		If Not @error Then ;exists
-			Sleep(3000)
-			Send("{TAB}" & $username & "{TAB}" & $password)
-			ExitLoop
+			Sleep(4500)
+			;check to see if remember username is checked
+			$location = PixelSearch((($WinLoc[0]+$WinLoc[2])-201), (($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.5))+51, (($WinLoc[0]+$WinLoc[2])-201), (($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.5))+51, 0xC89B3C, 1, 1)
+			If Not @error Then ;checked
+				Send("{TAB}{TAB}{TAB}" & $username & "{TAB}" & $password)
+				ExitLoop
+			Else
+				Send($username & "{TAB}" & $password)
+				ExitLoop
+			EndIf
 		EndIf
 	WEnd
 	Sleep(500)
