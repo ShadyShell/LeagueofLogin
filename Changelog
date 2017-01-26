@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+1.5.4
+- Riot changed their client name again. This time its "League of Legends". Updated script to use this name instead.
+- The original launcher is no longer needed so the code has been commented out. If this remains accurate it will be removed in a later update.
+- Minor house keeping
+
 1.5.3
 - Riot changed the location of their client in the WinGetPos array. Updated search so it looks at the correct location
 - The remember me checkbox at login now puts the focus in the password field. Added a check to see if this checkbox is checked or not

@@ -3,12 +3,12 @@
 
 #RequireAdmin
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
-;#AutoIt3Wrapper_Icon=..\..\MLP Icons\mlp_icon___league_of_legends_by_gefey-d4y3ijd.ico
+
 #AutoIt3Wrapper_Icon=League_Of_Legends_by_DKman.ico
 #AutoIt3Wrapper_Outfile=LeagueofLogin.exe
 #AutoIt3Wrapper_Res_Comment=Created by ShadyShell
 #AutoIt3Wrapper_Res_Description=A League of Legends login script
-#AutoIt3Wrapper_Res_Fileversion=1.5.3.0
+#AutoIt3Wrapper_Res_Fileversion=1.5.4.0
 #AutoIt3Wrapper_Res_Language=1033
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 
@@ -111,7 +111,7 @@ $btnNewCancel = GUICtrlCreateButton("Cancel", 200, 64, 81, 25)
 #EndRegion ### END Koda GUI section ###
 #Region ### START Koda GUI section ### Form=c:\users\dschneider\dropbox\other stuff\autoit projects\frmaccounts.kxf
 $frmLogin = GUICreate("League of Login", 281, 40, -1, -1, BitXOR($GUI_SS_DEFAULT_GUI, $WS_MINIMIZEBOX))
-;GUISetIcon("C:\Users\ShadyShell\Dropbox\Other Stuff\MLP Icons\mlp_icon___league_of_legends_by_gefey-d4y3ijd.ico", -1)
+
 GUISetIcon("C:\Users\ShadyShell\Dropbox\Other Stuff\AutoIt Projects\League_Of_Legends_by_DKman.ico", -1)
 $cmList = GUICtrlCreateCombo("", 8, 8, 185, 25, BitOR($CBS_DROPDOWNLIST,$CBS_AUTOHSCROLL))
 $btnLogin = GUICtrlCreateButton("Login", 200, 8, 73, 22)
@@ -347,11 +347,11 @@ WEnd
 Func _NewStart($username, $password)
 	GUISetState(@SW_HIDE)
 	If $path = "" Then
-		_FoolProofStart("C:\Riot Games\League of Legends\lol.launcher.exe")
+		_FoolProofStart("C:\Riot Games\League of Legends\LeagueClient.exe")
 	Else
-		_FoolProofStart($path & "\lol.launcher.exe")
+		_FoolProofStart($path & "\LeagueClient.exe")
 	EndIf
-
+#comments-start
 	;Relaunch launger on error message
 	While WinExists("LoL Patcher", "") == 1
 		$window = WinWait("Error")
@@ -396,16 +396,16 @@ Func _NewStart($username, $password)
 			WEnd
 		EndIf
 	WEnd
+	#comments-end
 
 	;Detect login screen and login
-	WinWait("League Client")
-	$list=WinList("League Client")
+	WinWait("League of Legends")
+	$list=WinList("League of Legends")
 	$WinLoc=WinGetPos($list[1][1])
 	While $WinLoc[3] < 101
-		$list=WinList("League Client")
+		$list=WinList("League of Legends")
 		$WinLoc=WinGetPos($list[1][1])
 	WEnd
-
 	;Check when to activate League window
 	$location = PixelSearch(($WinLoc[0]+$WinLoc[2])-200, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.6)+20, ($WinLoc[0]+$WinLoc[2])-200, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.6)+20, 0x000000, 1, 1)
 	While @error
@@ -420,7 +420,7 @@ Func _NewStart($username, $password)
 		$location = PixelSearch(($WinLoc[0]+$WinLoc[2]/16)-3, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/12)+8, ($WinLoc[0]+$WinLoc[2]/16)-3, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/12)+8, 0xEE2E24, 1, 1)
 		$password = StringReplace(StringReplace(StringReplace(StringReplace(StringReplace(StringReplace(StringReplace(StringReplace($password, "{", "☺{☹"), "}", "☺}☹"), "☺", "{"), "☹", "}"), "!", "{!}"), "#", "{#}"), "+", "{+}"), "^", "{^}")
 		If Not @error Then ;exists
-			Sleep(4500)
+			Sleep(4000)
 			;check to see if remember username is checked
 			$location = PixelSearch((($WinLoc[0]+$WinLoc[2])-201), (($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.5))+51, (($WinLoc[0]+$WinLoc[2])-201), (($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.5))+51, 0xC89B3C, 1, 1)
 			If Not @error Then ;checked
