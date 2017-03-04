@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+1.5.5
+- Removed windows activate code since the league client now auto-focuses itself when you are able to login
+- Changed color detect to the current color on screen since the color is technically visible on an invisible layer before it shows on screen
+- Changed delay down to one second since we are now waiting for the color to appear on screen
+
 1.5.4
 - Riot changed their client name again. This time its "League of Legends". Updated script to use this name instead.
 - The original launcher is no longer needed so the code has been commented out. If this remains accurate it will be removed in a later update.

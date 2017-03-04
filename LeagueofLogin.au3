@@ -8,7 +8,7 @@
 #AutoIt3Wrapper_Outfile=LeagueofLogin.exe
 #AutoIt3Wrapper_Res_Comment=Created by ShadyShell
 #AutoIt3Wrapper_Res_Description=A League of Legends login script
-#AutoIt3Wrapper_Res_Fileversion=1.5.4.0
+#AutoIt3Wrapper_Res_Fileversion=1.5.5.0
 #AutoIt3Wrapper_Res_Language=1033
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 
@@ -406,21 +406,22 @@ Func _NewStart($username, $password)
 		$list=WinList("League of Legends")
 		$WinLoc=WinGetPos($list[1][1])
 	WEnd
-	;Check when to activate League window
-	$location = PixelSearch(($WinLoc[0]+$WinLoc[2])-200, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.6)+20, ($WinLoc[0]+$WinLoc[2])-200, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.6)+20, 0x000000, 1, 1)
-	While @error
-		$location = PixelSearch(($WinLoc[0]+$WinLoc[2])-200, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.6)+20, ($WinLoc[0]+$WinLoc[2])-200, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.6)+20, 0x000000, 1, 1)
-	WEnd
-	WinActivate($list[1][1])
 
 	;Check To see if login is possible
 	Sleep(500)
 	While 1
 		$WinLoc = WinGetPos($list[1][1])
-		$location = PixelSearch(($WinLoc[0]+$WinLoc[2]/16)-3, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/12)+8, ($WinLoc[0]+$WinLoc[2]/16)-3, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/12)+8, 0xEE2E24, 1, 1)
+		;$location = PixelSearch(($WinLoc[0]+$WinLoc[2]/16)-3, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/12)+8, ($WinLoc[0]+$WinLoc[2]/16)-3, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/12)+8, 0xEE2E24, 1, 1)
+		$tPoint = DllStructCreate("int X;int Y")
+		$window = WinWait($list[1][1])
+		$WinLoc = WinGetPos($window)
+		DllStructSetData($tpoint, "X", $WinLoc[2]/16.5)
+		DllStructSetData($tpoint, "Y", $WinLoc[2]/1.915)
+		_WinAPI_ClientToScreen($window, $tPoint)
+		$iColor = PixelGetColor(DllStructGetData($tpoint, "X"),DllStructGetData($tpoint, "Y"))
 		$password = StringReplace(StringReplace(StringReplace(StringReplace(StringReplace(StringReplace(StringReplace(StringReplace($password, "{", "☺{☹"), "}", "☺}☹"), "☺", "{"), "☹", "}"), "!", "{!}"), "#", "{#}"), "+", "{+}"), "^", "{^}")
-		If Not @error Then ;exists
-			Sleep(4000)
+		If Not @error And $iColor = "15609380" Then ;exists
+			Sleep(1000)
 			;check to see if remember username is checked
 			$location = PixelSearch((($WinLoc[0]+$WinLoc[2])-201), (($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.5))+51, (($WinLoc[0]+$WinLoc[2])-201), (($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.5))+51, 0xC89B3C, 1, 1)
 			If Not @error Then ;checked
