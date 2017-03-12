@@ -1,6 +1,9 @@
 Change Log
 ==========
 
+1.5.6
+- Minor fix to the login process. Riot added more things that are selectable with tab so more tabs are needed
+
 1.5.5
 - Removed windows activate code since the league client now auto-focuses itself when you are able to login
 - Changed color detect to the current color on screen since the color is technically visible on an invisible layer before it shows on screen
