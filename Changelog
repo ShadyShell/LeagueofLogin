@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+1.5.7
+- Removed extra tabs on login page
+- Added check to see if League was still running and if it wasnt ask to relaunch instead of crash
+
 1.5.6
 - Minor fix to the login process. Riot added more things that are selectable with tab so more tabs are needed
 
