@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+1.5.8
+- Removed extra tab in login screen
+- Remember username checkbox is no longer required as one tab is need to go to the username field regardless. Keeping code commented out in case this changes
+
 1.5.7
 - Removed extra tabs on login page
 - Added check to see if League was still running and if it wasnt ask to relaunch instead of crash

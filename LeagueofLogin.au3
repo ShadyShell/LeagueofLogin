@@ -8,7 +8,7 @@
 #AutoIt3Wrapper_Outfile=LeagueofLogin.exe
 #AutoIt3Wrapper_Res_Comment=Created by ShadyShell
 #AutoIt3Wrapper_Res_Description=A League of Legends login script
-#AutoIt3Wrapper_Res_Fileversion=1.5.7.0
+#AutoIt3Wrapper_Res_Fileversion=1.5.8.0
 #AutoIt3Wrapper_Res_Language=1033
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 
@@ -431,14 +431,14 @@ Func _NewStart($username, $password)
 		If Not @error And $iColor = "15609380" Then ;exists
 			Sleep(1000)
 			;check to see if remember username is checked
-			$location = PixelSearch((($WinLoc[0]+$WinLoc[2])-201), (($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.5))+51, (($WinLoc[0]+$WinLoc[2])-201), (($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.5))+51, 0xC89B3C, 1, 1)
-			If Not @error Then ;checked
-				Send("{TAB}{TAB}" & $username & "{TAB}" & $password)
+			;$location = PixelSearch((($WinLoc[0]+$WinLoc[2])-201), (($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.5))+51, (($WinLoc[0]+$WinLoc[2])-201), (($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.5))+51, 0xC89B3C, 1, 1)
+			;If Not @error Then ;checked
+				Send("{TAB}" & $username & "{TAB}" & $password)
 				ExitLoop
-			Else
-				Send($username & "{TAB}" & $password)
-				ExitLoop
-			EndIf
+			;Else
+			;	Send($username & "{TAB}" & $password)
+			;	ExitLoop
+			;EndIf
 		EndIf
 	WEnd
 	Sleep(500)
