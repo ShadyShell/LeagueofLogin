@@ -3,6 +3,7 @@ Change Log
 
 1.5.9
 - Moved the code that checks if the league window exists into a function since it was being used a lot
+- Removed the delay before checking if the Riot logo exists before logging in due to the fact that the username and password fields load much sooner
 
 1.5.8
 - Removed extra tab in login screen
