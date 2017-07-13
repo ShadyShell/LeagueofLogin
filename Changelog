@@ -1,6 +1,9 @@
 Change Log
 ==========
 
+1.5.9
+- Moved the code that checks if the league window exists into a function since it was being used a lot
+
 1.5.8
 - Removed extra tab in login screen
 - Remember username checkbox is no longer required as one tab is need to go to the username field regardless. Keeping code commented out in case this changes
