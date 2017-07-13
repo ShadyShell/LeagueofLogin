@@ -8,7 +8,7 @@
 #AutoIt3Wrapper_Outfile=LeagueofLogin.exe
 #AutoIt3Wrapper_Res_Comment=Created by ShadyShell
 #AutoIt3Wrapper_Res_Description=A League of Legends login script
-#AutoIt3Wrapper_Res_Fileversion=1.5.8.0
+#AutoIt3Wrapper_Res_Fileversion=1.5.9.0
 #AutoIt3Wrapper_Res_Language=1033
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 
@@ -39,6 +39,7 @@ dim $var
 dim $encryption
 dim $key
 dim $path
+dim $WinLoc[1]
 
 ;Check for updates
 $update = InetRead("https://raw.githubusercontent.com/ShadyShell/LeagueofLogin/master/Changelog")
@@ -127,7 +128,7 @@ If Not FileExists("accountConfig.ini") Then
 	FileWrite($file, "#Leave path blank if League is installed at ""C:\Riot Games\League of Legends""" & @CRLF)
 	FileWrite($file, "path=" & @CRLF & @CRLF)
 	FileWrite($file, "[Default]" & @CRLF)
-	FileWrite($file, "#Put the account name (name in brackets) that you want to be selected by default. Leave this blank if you don't want anything selected." & @CRLF)
+	FileWrite($file, "#Put the account name that you want to be selected by default. Leave this blank if you don't want anything selected." & @CRLF)
 	FileWrite($file, "account=" & @CRLF& @CRLF)
 	FileWrite($file, "[Encryption]" & @CRLF)
 	FileWrite($file, "#Change to yes to enable encryption. Encrypted passwords must be generated from the Encrpt Passwords program" & @CRLF)
@@ -411,34 +412,28 @@ Func _NewStart($username, $password)
 	Sleep(500)
 	While 1
 		$WinLoc = WinGetPos($list[1][1])
+		checkWindow()
 		;$location = PixelSearch(($WinLoc[0]+$WinLoc[2]/16)-3, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/12)+8, ($WinLoc[0]+$WinLoc[2]/16)-3, ($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/12)+8, 0xEE2E24, 1, 1)
 		$tPoint = DllStructCreate("int X;int Y")
 		$window = WinWait($list[1][1])
 		$WinLoc = WinGetPos($window)
-		If $WinLoc = 0 Then
-			$ans = MsgBox(16 + 4, "League not found", "The League of Legends window was not found. Would you like to restart it?")
-			If $ans = 6 Then
-				_NewStart($username, $password)
-			Else
-				Exit
-			EndIf
-		EndIf
+		checkWindow()
 		DllStructSetData($tpoint, "X", $WinLoc[2]/16.5)
 		DllStructSetData($tpoint, "Y", $WinLoc[2]/1.915)
 		_WinAPI_ClientToScreen($window, $tPoint)
 		$iColor = PixelGetColor(DllStructGetData($tpoint, "X"),DllStructGetData($tpoint, "Y"))
 		$password = StringReplace(StringReplace(StringReplace(StringReplace(StringReplace(StringReplace(StringReplace(StringReplace($password, "{", "☺{☹"), "}", "☺}☹"), "☺", "{"), "☹", "}"), "!", "{!}"), "#", "{#}"), "+", "{+}"), "^", "{^}")
 		If Not @error And $iColor = "15609380" Then ;exists
-			Sleep(1000)
+			;Sleep(1000)
 			;check to see if remember username is checked
-			;$location = PixelSearch((($WinLoc[0]+$WinLoc[2])-201), (($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.5))+51, (($WinLoc[0]+$WinLoc[2])-201), (($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.5))+51, 0xC89B3C, 1, 1)
-			;If Not @error Then ;checked
-				Send("{TAB}" & $username & "{TAB}" & $password)
+			$location = PixelSearch((($WinLoc[0]+$WinLoc[2])-201), (($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.5))+51, (($WinLoc[0]+$WinLoc[2])-201), (($WinLoc[3]+$WinLoc[1])-($WinLoc[3]/1.5))+51, 0xC89B3C, 1, 1)
+			If Not @error Then ;checked
+				Send("{TAB}{TAB}{TAB}{TAB}{TAB}" & $username & "{TAB}" & $password)
 				ExitLoop
-			;Else
-			;	Send($username & "{TAB}" & $password)
-			;	ExitLoop
-			;EndIf
+			Else
+				Send($username & "{TAB}" & $password)
+				ExitLoop
+			EndIf
 		EndIf
 	WEnd
 	Sleep(500)
@@ -614,5 +609,16 @@ Func refresh()
 	_GUICtrlComboBox_SetCurSel($cmDefault, $iIndex)
 	If $default <> "" Then
 		GUICtrlSetState($btnLogin, $GUI_FOCUS)
+	EndIf
+EndFunc
+
+Func checkWindow()
+	If $WinLoc = 0 Then
+		$ans = MsgBox(16 + 4, "League not found", "The League of Legends window was not found. Would you like to restart it?")
+		If $ans = 6 Then
+			_NewStart($username, $password)
+		Else
+			Exit
+		EndIf
 	EndIf
 EndFunc
